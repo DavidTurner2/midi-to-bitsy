@@ -8,7 +8,6 @@ if (!Uint8Array.prototype.forEach) {
 		value: Array.prototype.forEach
 	});
 }
-
 /**
  * Main player class.  Contains methods to load files, start, stop.
  * @param {function} - Callback to fire for each MIDI event.  Can also be added with on('midiEvent', fn)
@@ -35,6 +34,7 @@ class Player {
 		this.events = [];
 		this.totalEvents = 0;
 		this.eventListeners = {};
+		this.info = [];
 
 		if (typeof(eventHandler) === 'function') this.on('midiEvent', eventHandler);
 	}

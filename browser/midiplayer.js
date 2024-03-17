@@ -50,13 +50,15 @@ var MidiPlayer = (function () {
     CIRCLE_OF_FIFTHS: ['C', 'G', 'D', 'A', 'E', 'B', 'F#', 'C#', 'G#', 'D#', 'A#', 'E#']
   }; // Builds notes object for reference against binary values.
 
-  var allNotes = [['C'], ['C#', 'Db'], ['D'], ['D#', 'Eb'], ['E'], ['F'], ['F#', 'Gb'], ['G'], ['G#', 'Ab'], ['A'], ['A#', 'Bb'], ['B']];
+  var allNotes = [['C'], ['C#', 'C#'], ['D'], ['D#', 'D#'], ['E'], ['F'], ['F#', 'F#'], ['G'], ['G#', 'G#'], ['A'], ['A#', 'A#'], ['B']];
   var counter = 0; // All available octaves.
 
   var _loop = function _loop(i) {
     allNotes.forEach(function (noteGroup) {
       noteGroup.forEach(function (note) {
-        return Constants.NOTES[counter] = note + i;
+        //set octave higher
+        let j = i+1;
+        return Constants.NOTES[counter] = note + j;
       });
       counter++;
     });
