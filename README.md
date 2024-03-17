@@ -4,6 +4,6 @@ the maximum number of bars in bitsy currently is 16
 look at the demonstration midi as an example of what you can do. make sure you dont make long notes pass over from one bar into another bar
 ![alt text](dontdothis.png "midi")
 
-even though there I coded some slight quantization. in logic or any other program that doesnt quantize note lengths you should use a fixed note length function and edit the length manually just in case
+in logic or any other program that doesnt quantize note lengths you should edit the length manually so that the order doesnt get messed up in bitsy. 
 
 
