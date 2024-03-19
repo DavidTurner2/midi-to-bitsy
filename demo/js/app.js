@@ -28,17 +28,17 @@ var play = function(a) {
 		for (let i2 = 0; i2 < Player.info[i].length; i2++) {
 			if(Player.info[i][i2].name == "Note on" || Player.info[i][i2].name == "Note off"){
 				if(Player.info[i][i2].name == "Note on"){
+					//push note on values
 					let fart = {note:"", tick:""};
 					fart.note = Player.info[i][i2].noteName
 					fart.tick = Player.info[i][i2].tick
-
 					notes.push(fart);
 				}
 				if(Player.info[i][i2].name == "Note off"){
+					//push note off values
 					let fart = {note:"", tick:""};
 					fart.note = Player.info[i][i2].noteName
 					fart.tick = Player.info[i][i2].tick
-
 					noted.push(fart);				
 				}
 				console.log(Player.info[i][i2]);
@@ -50,7 +50,7 @@ var play = function(a) {
 	console.log("on",notes);				
 	for (let i = 0; i < notes.length; i++) {
 		let h = true;
-
+        //push notes to array with duration by checking how long the note was on and when it comes off
 		for (let j = 0; j < noted.length; j++) {
 			if (notes[i].note == noted[j].note && h == true){
 				h = false;
@@ -66,7 +66,7 @@ var play = function(a) {
 		}
 	}
 	for (let i = 0; i < array.length; i++) {
-		//might add a duophonic mode
+        //if there is a chord delete one of the notes and put in a seperate array.
 		array.forEach((element) => {
 			if(array[i].tick == element.tick && array[i].note != element.note){
 
@@ -83,7 +83,7 @@ var play = function(a) {
 	//convert delta time to bitsy time
 	function toDuration(data){
 		for (let i = 1; i < 17; i++) {
-			//adding slight quantization
+			//adding slight quantization doesnt really work
 			if(data == (Player.division/4) * i || data < (Player.division/2) * i){
 			
 			return 1 * i;
@@ -93,25 +93,22 @@ var play = function(a) {
 		
 
 	}
-	
-	array.sort(compareNumbers);
-	
+	//sort the array from tick position so notes go in order
+	array.sort(compareNumbers);	
 	function compareNumbers(a, b) {
 		return a.tick - b.tick;
 	  }
-
+	  //add zeroes to places where there are no notes
 	  function addZeros(twe){
 		if(twe[0].tick !== 0){
 			twe.splice(0,0,{note: "0", duration: toDuration(twe[0].tick), tick: 0});
-
 		}
 		let yes = [];
 		yes = twe.slice();
 
 		for (let i = 0; i < twe.length; i++) {
-			if(i != twe.length - 1){
-		
-				
+			if(i != twe.length - 1){		
+				//player.division/4 is the length of one note so multiplying it by the duration should be the next tick note but if its not then put a zero that goes to the next tick note
 				if(twe[i].tick == 0){
 			      if (((Player.division/4) * twe[i].duration) != twe[i+1].tick){
 				yes.splice(i,0,{note: "0", duration: toDuration(twe[i+1].tick - (Player.division/4)* twe[i].duration), tick:(Player.division/4)* twe[i].duration});
@@ -129,7 +126,7 @@ var play = function(a) {
 		}
 		return yes;
 	  }
-
+	  //convert into bitsy format using arrays so its easier to display
 	function bitsy(yes){
 		let output = [];
 
@@ -139,6 +136,7 @@ var play = function(a) {
 			if (yes[i].duration == 1){
 				output.push(yes[i].note);
 			}
+			//putting zeros based on duration
 			if(yes[i].duration > 1){
 				if(yes[i].note == '0'){
 					output.push(yes[i].note);
@@ -168,12 +166,14 @@ var play = function(a) {
 	return output.flat();
 	}
 	}
+	//slice into chunks of 16 length of a bar
 	function sliceIntoChunks(arr, chunkSize) {
 	const res = [];
 	for (let i = 0; i < arr.length; i += chunkSize) {
 	const chunk = arr.slice(i, i + chunkSize);
 	if(chunk.length < chunkSize){
 		let difference = chunkSize - chunk.length
+		//fill rest of bar with zeros
 		for (let k = 0; k < difference; k++) {
 			chunk.push("0");
 		}
@@ -188,8 +188,9 @@ var play = function(a) {
 	console.log("bitsy",bitsy(addZeros(array)));
 	//console.log("bitsy2",bitsy(addZeros(array2)));
 	document.getElementById("output").innerHTML ="";
-	//switch to different array
+	//save value to a different global array based on where the file was uploaded from
 	if(a){
+		//the main melody allows you to start displaying data
 		document.getElementById("b").removeAttribute("disabled");
 		document.getElementById("b").removeAttribute("style");
 
@@ -204,11 +205,10 @@ var pause = function() {
 	Player.pause();
 	document.getElementById('play-button').innerHTML = 'Play';
 }
-
-var stop = function() {
-
-
+//function that displays the data on the html page
+var stop = function() {	
 	document.getElementById("output").innerHTML ="";
+	//when there is only 1 chunk so i have to all of this to see if its an array or not
 	if (bitsyarray[0].constructor == Array){
 		for (let e = 0; e < bitsyarray.length; e++) {			
 			if(bitsyarray2.toString().length == 0){				
@@ -287,6 +287,7 @@ var buildTracksHtml = function() {
 				}				
 			});
 			Player.loadArrayBuffer(reader.result);
+			//change the array the array in this function gets saved too
 			play(true);
 		}, false);
 	}
@@ -303,6 +304,7 @@ var buildTracksHtml = function() {
 				}				
 			});
 			Player.loadArrayBuffer(reader.result);
+			//change the array the array in this function gets saved too
 			play(false);
 		}, false);
 	}
@@ -310,7 +312,5 @@ var buildTracksHtml = function() {
 
 
 
-
-	//loadDataUri(mario);
 
 
