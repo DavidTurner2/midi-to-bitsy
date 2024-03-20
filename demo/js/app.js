@@ -83,7 +83,8 @@ var play = function(a) {
 	//convert delta time to bitsy time
 	function toDuration(data){
 		for (let i = 1; i < 17; i++) {
-			if(data == (Player.division/4) * i){
+			//slight quantization
+			if(data <= (Player.division/4) * i){
 			
 			return 1 * i;
 		}                    
