@@ -1,6 +1,7 @@
 # midi to bitsy
-there should be 16 notes in a bar you can make 1 note as long as an entire bar. make sure the note lengths are quantized by quantizing or snapping
-![alt text](ok.png "midi")
+there should be 16 notes in a bar you can make 1 note as long as an entire bar. make sure the note lengths are quantized by quantizing or snapping 
+![alt text](ok.png "midi")the highest octave is 5 lowest is 2 C2 to B5 do not use C6 or higher this pictures need to be lowered an octave
+
 ![alt text](ok2.png "midi")
 ![alt text](no2.png "midi")
 
@@ -12,6 +13,7 @@ there should be 16 notes in a bar you can make 1 note as long as an entire bar. 
 the maximum number of bars in bitsy is 16 
 look at the demonstration midi as an example of what you can do. make sure you dont make long notes pass over from one bar into another bar
 ![alt text](dontdothis.png "midi")
+# the highest octave is 5 lowest is 2 C2 to B5 do not use C6 or higher this picture need to be lowered an octave
 
 do not have overlapping notes like this it will mess up the note positions
 ![alt text](no.png "midi")
